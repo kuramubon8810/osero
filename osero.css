@@ -1,0 +1,34 @@
+table {
+    background-color: green;
+}
+
+td {
+    width: 60px;
+    height: 60px;
+}
+
+th, td {
+    border: solid white 1px;
+}
+
+th {
+    color: white;
+}
+
+td>div {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 30px;
+}
+div.white{
+    border-style: solid;
+    border-radius: 100%;
+    border-color:white;
+    border-width:30px;
+}
+div.black{
+    border-style: solid;
+    border-radius: 100%;
+    border-color:black;
+    border-width:30px;
+}
