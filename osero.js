@@ -25,12 +25,13 @@ let board_click = (e) => {
         x: board_number % board_size.y_width,
     };
 
+    let turn_count = 0;
     //board_positionの場合:-1,-1左上、0,-1上、+1,-1右上、+1,0右、+1,+1右下、0,+1下、-1,+1左下、-1,0左
     //position_number の場合:-9左上、-8上、-7右上、+1右、+9右下、+8下、+7左下、-1左
     if (document.getElementById(position).classList.length === 0) {
         if (turn === false) {
             // document.getElementById(position).classList.add("black");//ここ二行はデバッグモード用のどこにでも置けるようにするやつ
-            // turn = !turn;//もしコメントアウト外すときは下のをコメントアウトすべし
+            //turn = !turn;//もしコメントアウト外すときは下のをコメントアウトすべし
             for (let y = board_position.y - 1; y <= board_position.y + 1; ++y) {
                 for (let x = board_position.x - 1; x <= board_position.x + 1; ++x) {
                     let around_math = "Num" + ((y - 1) * 8 + x);
@@ -69,8 +70,8 @@ let board_click = (e) => {
                                 };
                             }
                             else if (document.getElementById("Num" + sum).classList.contains("black")) {
-                                document.getElementById(position).classList.add("black");//ここが正規のコード
-                                turn = !turn;//上のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
+                                document.getElementById(position).classList.add("black");//ここが正規のコード　　上のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
+                                turn_count = turn_count + 1;
                                 for (let i = 0; i < document.getElementsByClassName("temp_black").length; ++i) {
                                     document.getElementsByClassName("temp_black")[i].classList.add("black");
                                 };
@@ -88,11 +89,13 @@ let board_click = (e) => {
                         };
                     };
                 };
+            }; if (turn_count !== 0) {
+                turn = !turn
             };
         }
         else {
             // document.getElementById(position).classList.add("white");//ここ二行はデバッグモード用のどこにでも置けるようにするやつ
-            // turn = !turn;//もしコメントアウト外すときは下のをコメントアウトすべし
+            //turn = !turn;//もしコメントアウト外すときは下のをコメントアウトすべし
             for (let y = board_position.y - 1; y <= board_position.y + 1; ++y) {
                 for (let x = board_position.x - 1; x <= board_position.x + 1; ++x) {
                     let around_math = "Num" + ((y - 1) * 8 + x);
@@ -131,8 +134,8 @@ let board_click = (e) => {
                                 };
                             }
                             else if (document.getElementById("Num" + sum).classList.contains("white")) {
-                                document.getElementById(position).classList.add("white");//ここが正規のコード
-                                turn = !turn;//上のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
+                                document.getElementById(position).classList.add("white");//ここが正規のコード　上のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
+                                turn_count = turn_count + 1;
                                 for (let i = 0; i < document.getElementsByClassName("temp_white").length; ++i) {
                                     document.getElementsByClassName("temp_white")[i].classList.add("white");
                                 };
@@ -150,9 +153,11 @@ let board_click = (e) => {
                         };
                     };
                 };
+            }; if (turn_count !== 0) {
+                turn = !turn
             };
-        }
-    }
+        };
+    };
     console.log(board_position.x, board_position.y);
 };
 
