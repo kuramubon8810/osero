@@ -20,15 +20,56 @@ td>div {
     border-color: rgba(0, 0, 0, 0);
     border-width: 30px;
 }
-div.white{
+
+div.white {
     border-style: solid;
     border-radius: 100%;
-    border-color:white;
-    border-width:30px;
+    border-color: white;
+    border-width: 30px;
 }
-div.black{
+
+div.black {
     border-style: solid;
     border-radius: 100%;
-    border-color:black;
-    border-width:30px;
+    border-color: black;
+    border-width: 30px;
+}
+
+.grid {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(50, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: 250px
+}
+
+.UI {
+    font-size: 50px;
+    grid-column-start: 3;
+    width: 300px;
+    height: 250px;
+    border-style: solid;
+    border-color: black;
+    background-color: skyblue;
+}
+
+.black_UI, .white_UI {
+    font-size: 50px;
+    line-height: 50px;
+    margin-top: 50px;
+    margin-bottom: 0;
+}
+
+.PASS_button {
+    font-size: 60px;
+    width: 300px;
+    height: 70px;
+    color: blue;
+
+}
+
+.black_UI {
+    color: orangered;
+    font-size: 100px;
+    font: bold;
 }
