@@ -11,7 +11,20 @@
 
 <body>
     <h1>オセロ</h1>
-    <table id="board"></table>
+    <div class="grid">
+        <table id="board"></table>
+        <div class="UI">
+            <p class="black_UI" id="black_turn">black</p>
+            <div id="now_black_peaces" class="now">2</div>
+            <button id="black_PASS" class="PASS_button">PASS</button>
+        </div>
+        <div class="UI">
+            <p class="white_UI" id="white_turn">white</p>
+            <div id="now_white_peaces" class="now">2</div>
+            <button id="white_PASS" class="PASS_button">PASS</button>
+        </div>
+        <div class="next_game"><button id="next_game_button" class="next_game_button">NEXTGAME</button></div>
+    </div>
     <script src=osero.js></script>
 </body>
 
