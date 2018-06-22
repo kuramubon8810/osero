@@ -63,13 +63,27 @@ div.black {
 .PASS_button {
     font-size: 60px;
     width: 300px;
-    height: 70px;
+    height: 75px;
     color: blue;
-
+    display:none;
 }
 
 .black_UI {
     color: orangered;
     font-size: 100px;
     font: bold;
+}
+
+.next_game {
+    grid-column-start:3;
+}
+
+.next_game_button{
+    font-size: 55px;
+    width: 300px;
+    height: 75px;
+    color: blue;
+    border:solid;
+    border-color:black;
+    display:none;
 }
