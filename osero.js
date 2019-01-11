@@ -17,75 +17,73 @@ const board_click = (e) => {
     const search_enemy = (my_color, enemy_color, temp_my_color) => {
         let TempMyColor = document.getElementsByClassName(temp_my_color);
         for (let y = board_position.y - 1; y <= board_position.y + 1; ++y) {
+
             for (let x = board_position.x - 1; x <= board_position.x + 1; ++x) {
                 let y_dif = y - board_position.y;
                 let x_dif = x - board_position.x;
-                let position_sum = board_number + (y_dif * BOARD_SIZE + x_dif);
-                let position_sum_div = position_sum % BOARD_SIZE;
+                let position_sum = board_number + (y_dif * 8 + x_dif);
+                let position_sum_div = position_sum % 8;
 
-                if (position_sum < 64 && position_sum > 1) {
+                if (position_sum < 1 || position_sum > 64) {
+                }
+                else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
 
-                    if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
+                    while (true) {
 
-                        while (true) {
+                        if (position_sum <= 0 || position_sum > 64) {
 
-                            if (position_sum <= 0 || position_sum > 64) {
+                            while (TempMyColor.length !== 0) {
+                                TempMyColor[0].classList.remove(temp_my_color);
+                            } break;
+                        }
+                        else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
+
+                            if (((position_sum_div === 0) || (position_sum_div === 1)) && ((x - board_position.x) !== 0)) {//position_sum_divは列を確かめ、両端を検知して、x-board_position.xは進む方向を示している。両端から飛び出そうとすると弾かれます。
 
                                 while (TempMyColor.length !== 0) {
                                     TempMyColor[0].classList.remove(temp_my_color);
                                 }
+                                y_dif = y_dif + (y - board_position.y);
+                                y_dif = y_dif + (x - board_position.x);
+                                position_sum = board_number + (y_dif * 8 + x_dif);
+                                position_sum_div = position_sum % 8;
                                 break;
                             }
-                            else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
-
-                                if (((position_sum_div === 0) || (position_sum_div === 1)) && ((x - board_position.x) !== 0)) {//position_sum_divは列を確かめ、両端を検知して、x-board_position.xは進む方向を示している。両端から飛び出そうとすると弾かれます。
-
-                                    while (TempMyColor.length !== 0) {
-                                        TempMyColor[0].classList.remove(temp_my_color);
-                                    }
-                                    y_dif = y_dif + (y - board_position.y);
-                                    y_dif = y_dif + (x - board_position.x);
-                                    position_sum = board_number + (y_dif * BOARD_SIZE + x_dif);
-                                    position_sum_div = position_sum % BOARD_SIZE;
-                                    break;
-                                }
-                                else {
-                                    document.getElementById("Num" + position_sum).classList.add(temp_my_color);
-                                    y_dif = y_dif + (y - board_position.y);
-                                    x_dif = x_dif + (x - board_position.x);
-                                    position_sum = board_number + (y_dif * BOARD_SIZE + x_dif);
-                                    position_sum_div = position_sum % BOARD_SIZE;
-                                };
-                            }
-                            else if (document.getElementById("Num" + position_sum).classList.contains(my_color)) {
-                                document.getElementById(position).classList.add(my_color);//ここが正規のコード　　下のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
-                                turn_count = 1;
-
-                                for (let i = 0; i < TempMyColor.length; ++i) {
-                                    document.getElementsByClassName(temp_my_color)[i].classList.add(my_color);
-                                };
-
-                                while (document.getElementsByClassName(temp_my_color).length !== 0) {
-                                    document.getElementsByClassName(temp_my_color)[0].classList.remove(temp_my_color, enemy_color);
-                                };
-                                break;
-                            }
-                            else if (document.getElementById("Num" + position_sum).classList.length === 0) {
-
-                                while (document.getElementsByClassName(temp_my_color).length !== 0) {
-                                    document.getElementsByClassName(temp_my_color)[0].classList.remove(temp_my_color);
-                                };
-                                break;
+                            else {
+                                document.getElementById("Num" + position_sum).classList.add(temp_my_color);
+                                y_dif = y_dif + (y - board_position.y);
+                                x_dif = x_dif + (x - board_position.x);
+                                position_sum = board_number + (y_dif * 8 + x_dif);
+                                position_sum_div = position_sum % 8;
                             };
+                        }
+                        else if (document.getElementById("Num" + position_sum).classList.contains(my_color)) {
+                            document.getElementById(position).classList.add(my_color);//ここが正規のコード　　下のデバッグモードをコメントアウトして、こちらを動かすと好きなとこに置けなくなる
+                            turn_count = 1;
+
+                            for (let i = 0; i < TempMyColor.length; ++i) {
+                                document.getElementsByClassName(temp_my_color)[i].classList.add(my_color);
+                            };
+
+                            while (document.getElementsByClassName(temp_my_color).length !== 0) {
+                                document.getElementsByClassName(temp_my_color)[0].classList.remove(temp_my_color, enemy_color);
+                            };
+                            break;
+                        }
+                        else if (document.getElementById("Num" + position_sum).classList.length === 0) {
+
+                            while (document.getElementsByClassName(temp_my_color).length !== 0) {
+                                document.getElementsByClassName(temp_my_color)[0].classList.remove(temp_my_color);
+                            };
+                            break;
                         };
                     };
                 };
             };
         };
-    };
+    }
 
-    //次のターン、敵がコマを置けるかの判定（置けるとは、オセロのルール上ひっくり返せるかどうか）
-    const can_put_enemy = (my_color, enemy_color) => {
+    const can_put_peace = (my_color, enemy_color) => {
         let my_peace_count = document.getElementsByClassName(my_color).length;
 
         for (let i = 0; i < my_peace_count; i++) {
@@ -94,48 +92,48 @@ const board_click = (e) => {
             let imagnary_position = {
                 y: Math.floor(temp_position / BOARD_SIZE) + 1,
                 x: temp_position % BOARD_SIZE,
-            };
+            }
 
             for (let y = imagnary_position.y - 1; y <= imagnary_position.y + 1; ++y) {
+
                 for (let x = imagnary_position.x - 1; x <= imagnary_position.x + 1; ++x) {
 
                     let y_dif = y - imagnary_position.y;
                     let x_dif = x - imagnary_position.x;
-                    let position_sum = temp_position + (y_dif * BOARD_SIZE + x_dif);
-                    let position_sum_div = position_sum % BOARD_SIZE;
+                    let position_sum = temp_position + (y_dif * 8 + x_dif);
+                    let position_sum_div = position_sum % 8;
 
-                    if (position_sum < 64 && position_sum > 1) {
+                    if (position_sum < 1 || position_sum > 64) {
+                    }
+                    else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
 
-                        if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
+                        while (true) {
 
-                            while (true) {
+                            if (position_sum <= 0 || position_sum > 64) {
+                                break;
+                            }
+                            else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
 
-                                if (position_sum <= 0 || position_sum > 64) {
+                                if (((position_sum_div === 0) || (position_sum_div === 1)) && ((x - imagnary_position.x) !== 0)) {//position_sum_divは列を確かめ、両端を検知して、x-board_position.xは進む方向を示している。両端から飛び出そうとすると弾かれます。
+                                    y_dif = y_dif + (y - imagnary_position.y);
+                                    x_dif = x_dif + (x - imagnary_position.x);
+                                    position_sum = temp_position + (y_dif * 8 + x_dif);
+                                    position_sum_div = position_sum % 8;
                                     break;
                                 }
-                                else if (document.getElementById("Num" + position_sum).classList.contains(enemy_color)) {
-
-                                    if (((position_sum_div === 0) || (position_sum_div === 1)) && ((x - imagnary_position.x) !== 0)) {//position_sum_divは列を確かめ、両端を検知して、x-board_position.xは進む方向を示している。両端から飛び出そうとすると弾かれます。
-                                        y_dif = y_dif + (y - imagnary_position.y);
-                                        x_dif = x_dif + (x - imagnary_position.x);
-                                        position_sum = temp_position + (y_dif * BOARD_SIZE + x_dif);
-                                        position_sum_div = position_sum % BOARD_SIZE;
-                                        break;
-                                    }
-                                    else {
-                                        y_dif = y_dif + (y - imagnary_position.y);
-                                        x_dif = x_dif + (x - imagnary_position.x);
-                                        position_sum = temp_position + (y_dif * BOARD_SIZE + x_dif);
-                                        position_sum_div = position_sum % BOARD_SIZE;
-                                    };
-                                }
-                                else if (document.getElementById("Num" + position_sum).classList.contains(my_color)) {
-                                    break;
-                                }
-                                else if (document.getElementById("Num" + position_sum).classList.length === 0) {
-                                    can_put = 1;
-                                    break;
+                                else {
+                                    y_dif = y_dif + (y - imagnary_position.y);
+                                    x_dif = x_dif + (x - imagnary_position.x);
+                                    position_sum = temp_position + (y_dif * 8 + x_dif);
+                                    position_sum_div = position_sum % 8;
                                 };
+                            }
+                            else if (document.getElementById("Num" + position_sum).classList.contains(my_color)) {
+                                break;
+                            }
+                            else if (document.getElementById("Num" + position_sum).classList.length === 0) {
+                                can_put = 1;
+                                break;
                             };
                         };
                     };
@@ -144,7 +142,6 @@ const board_click = (e) => {
         };
     };
 
-    //cssのクラスの数を比べて結果の判定をしている
     const win_decision = () => {
         let all_black = document.getElementsByClassName("black").length;
         let all_white = document.getElementsByClassName("white").length;
@@ -181,14 +178,13 @@ const board_click = (e) => {
         };
     };
 
-    //メインの機構。クリックされたらここが実行される
     if (document.getElementById(position).classList.length === 0) {
         let white_turn = document.getElementById("white_turn");
         let black_turn = document.getElementById("black_turn");
 
         if (turn_of_white === false) {
             // document.getElementById(position).classList.add("black");//ここ二行はデバッグモード用のどこにでも置けるようにするやつ
-            //turn_of_white = !turn_of_white;//もしコメントアウト外すときは関数「search_enemy」のをコメントアウトすべし
+            //turn_of_white = !turn_of_white;//もしコメントアウト外すときはsearch_enemyのをコメントアウトすべし
             search_enemy("black", "white", "temp_black");
 
             if (turn_count !== 0) {
@@ -208,10 +204,10 @@ const board_click = (e) => {
                 white_turn.style.font = "bold";
                 white_turn.style.fontSize = "100px";
 
-                can_put_enemy("white", "black");
+                can_put_peace("white", "black");
 
                 if (can_put === 0) {
-                    can_put_enemy("black", "white");
+                    can_put_peace("black", "white");
 
                     if (can_put === 0) {
                         win_decision();
@@ -253,10 +249,10 @@ const board_click = (e) => {
                 black_turn.style.font = "bold";
                 black_turn.style.fontSize = "100px";
 
-                can_put_enemy("black", "white");
+                can_put_peace("black", "white");
 
                 if (can_put === 0) {
-                    can_put_enemy("white", "black");
+                    can_put_peace("white", "black");
 
                     if (can_put === 0) {
                         win_decision();
@@ -319,10 +315,11 @@ for (let y = 0; y < BOARD_SIZE + 1; ++y) {
         let html_tr = document.createElement("tr");
         let html_th = document.createElement("th");
 
-        board_create.appendChild(html_tr);
+        board.appendChild(html_tr);
         html_tr.appendChild(html_th);
 
         for (let x = 0; x < BOARD_SIZE + 1; ++x) {
+
             if (x !== 0) {
                 let html_th = document.createElement("th");
 
