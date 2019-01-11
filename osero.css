@@ -1,5 +1,7 @@
 table {
     background-color: green;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 td {
@@ -8,7 +10,7 @@ td {
 }
 
 th, td {
-    border: solid white 1px;
+    border: solid white 2px;
 }
 
 th {
